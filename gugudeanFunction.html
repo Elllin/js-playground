@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>gugudanfunction</title>
+</head>
+<body>
+    
+    <script>
+   
+        
+        function gugudan(number){
+            var result= [];
+            for(var j = 0; j < 9; j++){
+                result[j] = number * (j + 1);
+            }
+            return result;
+        }
+
+        function print(n, result){
+            document.write(`<h1>구구단 ${n}단 구현</h1>`)
+            for(var i = 0; i <9; i++){
+                    document.write(`${n} * ${i + 1} = ${result[i]}<br>`);
+                
+            }
+        }
+
+        function main(){
+            for(var i = 2; i <= 9; i++){
+               var result = gugudan(i);
+                print(i, result);
+            }
+        }
+
+        main();
+        
+   
+    </script>
+</body>
+</html>
