@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>소수 찾기</title>
+</head>
+<body>
+<h1>소수 찾기</h1>
+<div id = "result"></div>    
+<script>    
+    numbers = {};
+    numbers.all = [];
+    numbers.prime = [];
+    //전체수 입력
+    numbers.addAll = function(max_num){
+        for(var i = 2; i <= max_num; i++){
+            this.all.push(i);
+        }
+    }
+    //소수 판별
+    numbers.isPrime = function(number){
+        for(var i = 2; i < number; i++){
+                 var remainder = number % i;
+                 if(remainder === 0){
+                     return false;
+                 }
+        }
+        return true;
+    }
+
+    //소수 저장
+
+    numbers.addPrime = function(){
+        for(var i = 0; i < this.all.length; i++){
+            var n = this.all[i]
+            if(this.isPrime(n)){
+                this.prime.push(n);
+            }
+        }
+    }
+
+    numbers.getAllPrime = function(){
+        var ret = "";
+        ret += "<h2>전체 소수의 갯수 : " + this.prime.length +"</h2>";
+        for(i=0; i < this.prime.length; i++){
+        ret += `${i+1}번째 소수 : ${this.prime[i]}<br>`;
+        }
+       return ret; 
+    }
+    
+
+    numbers.addAll(1000);
+    numbers.addPrime();
+    document.getElementById('result').innerHTML = numbers.getAllPrime();
+    //console.log(numbers.prime);
+
+</script>
+</body>
+</html>
