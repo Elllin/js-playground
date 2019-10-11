@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>계산기</h1>
+    <div id="output"></div>
+    <fieldset>
+        <legend>계산기 구현하기</legend>
+        <label for="calculator"></label>
+       <p>첫번째수 : <input type="text" id=input1></p>
+        <p>두번째수 : <input type="text" id=input2></p>
+        <button id=btn onclick="calculator()">입력</button>
+        <p>더하기  : <div id="plus"></div></p>
+        <p>빼&nbsp;&nbsp;&nbsp;기 : <div id="minus"></div></p>
+        <p>곱하기 : <div id="multiply"></div></p>
+        <p>나누기 : <div id="divide"></div></p>
+    </fieldset>
+   <script>
+       var output = document.getElementById('output');
+       output.innerText = "계산기 구현하기"
+               function calculator() {
+                    var num1 = document.getElementById('input1').value;
+                    var num2 = document.getElementById('input2').value;
+                    var plus = document.getElementById('plus');
+                    var minus = document.getElementById('minus');
+                    var multiply = document.getElementById('multiply');
+                    var divide = document.getElementById('divide');
+                    plus.innerHTML =  `${num1} + ${num2} = ${Number(num1) + Number(num2)}`;
+                    minus.innerHTML =  `${num1} - ${num2} = ${Number(num1) - Number(num2)}`;
+                    multiply.innerHTML =  `${num1} * ${num2} = ${Number(num1) * Number(num2)}`;
+                    divide.innerHTML =  `${num1} / ${num2} = ${Math.round(Number(num1) / Number(num2))}`;
+        }
+        
+    </script>
+</body>
+</html>
