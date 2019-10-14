@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>계산기</h1>
+    <div id="output"></div>
+   <script>
+
+        var num1 = Number(prompt("첫번째 수를 입력해주세요"));
+        var operator = ""
+        var str = num1; 
+        while(operator !== 'p') {
+            operator = prompt('연산자를 입력해주세요');
+            if (operator === 'p'){
+                break;   
+            }else{
+                var num2 = Number(prompt("두번째 수를 입력해주세요"));
+                str += " " + operator + " " + num2; 
+                switch (operator) {
+                    case '+' :
+                    num1 += num2;
+                    break;
+                    case '-' :
+                    num1 -= num2;
+                    break;
+                    case '*' :
+                    num1 *= num2;
+                    break;
+                    case '/':
+                    num1 /= num2;
+                    break;
+                    default:
+                    alert('연산자를 입력해주세요');
+                    
+                }
+            }
+        }
+    
+    var result = num1
+    var output = document.getElementById('output');
+    output.innerHTML = str + ' = ' + result;
+        
+    </script>
+</body>
+</html>
