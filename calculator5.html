@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>계산기</h1>
+    <div id="output"></div>
+  
+   <script>
+    var input = {number : 2};
+    var calculator = {};
+    var output = {};
+    input.getFirstValue = function(){
+        this.num1 = Number(prompt("1번째 수를 입력해주세요"));
+       }
+
+       input.getOperator = function(){
+        while(true){
+            this.operator = prompt('연산자를 입력해주세요'); 
+            if(this.operator === '+' || this.operator === '-' || 
+                this.operator === '*' || this.operator === '/' || 
+                this.operator === 'p'){
+                        break;
+                    }else{
+                        alert('연산자를 다시 입력해주세요');
+                    }
+               
+                }
+        }
+      input.getSecondValue = function(){
+            this.num2 = Number(prompt(this.number + "번째 수를 입력해주세요")); 
+            this.number++;
+       }
+ 
+       calculator.calculator = function(){
+            switch (this.operator) {
+                case '+' :
+                this.num1 += this.num2;
+                break;
+                case '-' :
+                this.num1 -= this.num2;
+                break;
+                case '*' :
+                this.num1 *= this.num2;
+                break;
+                case '/':
+                this.num1 /= this.num2;
+                break;
+        
+            }
+     
+       }
+
+       output.print = function(){
+           var result = document.getElementById('output');
+           var lastStr = this.str + " = " + this.result; 
+           result.innerHTML = lastStr;
+       }
+
+       function main (){
+           input.getFirstValue();
+           input.operator = "";
+           output.str = input.num1;
+           while(input.operator !== 'p'){
+              input.getOperator();
+                if (input.operator === 'p' ){
+                    break;
+                }else{
+                    input.getSecondValue();
+                    output.str += " " + input.operator + " " + input.num2; 
+                    calculator.calculator()
+               }   
+        }
+        output.result = input.num1;
+        output.print();
+    } 
+    main();
+    </script>
+</body>
+</html>
