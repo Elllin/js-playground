@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>계산기</h1>
+    <div id="output"></div>
+  
+   <script>
+       function getFirstValue(){
+        var num1 = Number(prompt("1번째 수를 입력해주세요"));
+        return num1;
+       }
+
+       function getOperator(){
+        while(true){
+            var operator = prompt('연산자를 입력해주세요'); 
+            if(operator === '+' || operator === '-' || 
+                operator === '*' || operator === '/' || operator === 'p'){
+                        break;
+                    }else{
+                        alert('연산자를 다시 입력해주세요');
+                    }
+               
+                }
+             return operator;  
+        }
+
+       function getSecondValue(n){
+            var num2 = Number(prompt(n + "번째 수를 입력해주세요")); 
+          return num2;
+       }
+   
+
+       function calculator(num1, num2, operator){
+            switch (operator) {
+                case '+' :
+                num1 += num2;
+                break;
+                case '-' :
+                num1 -= num2;
+                break;
+                case '*' :
+                num1 *= num2;
+                break;
+                case '/':
+                num1 /= num2;
+                break;
+                default:
+                alert('연산자를 입력해주세요');
+                
+            }
+        var result = num1;
+        return result;
+       }
+
+       function print(str, result){
+           var output = document.getElementById('output');
+           var lastStr = str + " = " + result; 
+           output.innerHTML = lastStr;
+       }
+
+       function main (){
+        var result = getFirstValue();
+           var operator = ""
+           var n = 2;
+           var str = result;
+           while(operator !== 'p'){
+             operator = getOperator();
+                if (operator === 'p' ){
+                    break;
+                }else{
+                    var num2 = getSecondValue(n);
+                    str += " " + operator + " " + num2; 
+                    result = calculator(result, num2, operator)
+               }   
+            n++;
+        }
+        print(str, result);
+    } 
+    main();
+    </script>
+</body>
+</html>
