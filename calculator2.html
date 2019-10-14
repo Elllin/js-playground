@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>계산기</h1>
+    <div id="output"></div>
+    <fieldset>
+        <legend>계산기 구현하기</legend>
+        <label for="calculator"></label>
+       <p>첫번째수 : <input type="text" id=input1></p>
+       <p>연산자 : <input type="text" id=operator></p>
+        <p>두번째수 : <input type="text" id=input2></p>
+        <button id=btn onclick="calculator()">입력</button>
+        <p>결과  : <div id="result"></div></p>
+        
+    </fieldset>
+   <script>
+       var output = document.getElementById('output');
+       output.innerText = "계산기 구현하기"
+               function calculator() {
+                    var num1 = Number(document.getElementById('input1').value);
+                    var num2 = Number(document.getElementById('input2').value);
+                    var operator = document.getElementById('operator').value;
+                    var result = document.getElementById('result');
+                    console.log(operator)
+                    switch (operator){
+                        case '+' :
+                        var str = "<p>" + num1 +" + " + num2 + " = " + (num1 + num2) + "</p>";
+                        break;
+                        case '-' :
+                        var str = "<p>" + num1 +" - " + num2 + " = " + (num1 - num2) + "</p>";
+                        break;
+                        case '*' :
+                        var str = "<p>" + num1 +" * " + num2 + " = " + (num1 * num2) + "</p>";
+                        break;
+                        case '/' :
+                        var str = "<p>" + num1 +" / " + num2 + " = " + (num1 / num2) + "</p>";
+                        break;
+                        default : 
+                        var str = "연산자를 다시 입력해주세요.";
+                    }
+                    
+                    
+                    result.innerHTML = str;
+
+                    /*var str = "";
+                    str += "<p>더하기 : " + num1 +" + " + num2 + " = " + (num1 + num2) + "</p>";
+                    str += "<p>곱하기 : " + num1 +" * " + num2 + " = " + (num1 * num2) + "</p>";
+                    str += "<p>나누기 : " + num1 +" / " + num2 + " = " + (num1 / num2) + "</p>";
+                 
+                    result.innerHTML = str;                   */
+
+                    
+        }
+        
+    </script>
+</body>
+</html>
