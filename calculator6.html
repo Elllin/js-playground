@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            font-family : monospace;
+            font-size : 1.5em;
+        }
+        h1 {font-weight : bolder;
+            font-style : oblique;
+            text-decoration : underline;
+            color :salmon;
+            background-color :aqua;
+            Letter-spacing : 1em;
+            text-align : center;
+            
+        }
+        #output {
+            background-color : gold;
+            color : green;
+        }
+    </style>
+</head>
+<body>
+    <h1>계산기</h1>
+  
+    수식을 입력하세요 : <input type="text" id="answer">
+    <button id='btn' onclick="runCalculator()">전송</button><br>
+    결과 : <div id="output"></div>
+  
+   <script>
+    function runCalculator(){
+        var input = {number : [], operators : []};
+        var calculator = {};
+        var output = {};   
+       
+        //number, operator 분리
+         input.getArray = function(){
+         var answer = document.getElementById('answer').value;
+            answerArray = answer.split(" ");
+            for(var i = 0; i < answerArray.length; i++) {
+                var remainder = i % 2;
+                if (remainder === 0){
+                    input.number.push(Number(answerArray[i]));
+                }else{
+                    input.operators.push(answerArray[i]);
+                }
+            }
+        };
+
+        //연산자 
+        input.getOperator = function(i){
+                if(this.operators[i] === '+' || this.operators[i] === '-' || 
+                    this.operators[i] === '*' || this.operators[i] === '/' || 
+                    this.operators[i] === 'p'){
+                        this.operator = this.operators[i]
+                        }else{
+                            alert('연산자를 다시 입력해주세요');
+                            this.operator = -1;
+                        }
+                    }
+  
+        //처음 숫자
+        input.getFirstValue = function(){
+            input.num1 = input.number[0];
+        }
+
+        //나머지 숫자
+        input.getSecondValue = function(i){
+                input.num2 = input.number[i+1];
+        }
+        
+        //연산
+        calculator.calculator = function(){
+                switch (input.operator) {
+                    case '+' :
+                    input.num1 += input.num2;
+                    break;
+                    case '-' :
+                    input.num1 -= input.num2;
+                    break;
+                    case '*' :
+                    input.num1 *= input.num2;
+                    break;
+                    case '/':
+                    input.num1 /= input.num2;
+                    break;
+                }
+        }
+
+        //화면 출력
+        output.print = function(){
+            var answer =document.getElementById('answer');
+            var result = document.getElementById('output');
+            if(input.operator === -1){
+                result.textContent = "다시 입력하세요."
+                answer.value = "";
+            }else{
+              var lastStr = this.str + " = " + this.result; 
+                 result.innerHTML = lastStr;
+             }
+        }
+
+        //메인함수
+        function main (){
+            input.getArray();
+            input.getFirstValue();
+            output.str = input.num1;
+            while(input.operator !== 'p'){
+                for(var i = 0; i < input.operators.length; i++){
+                input.getOperator(i);
+                    if (input.operator === 'p' ){
+                        break;
+                    }else if(input.operator === -1){
+                        output.print(-1);
+                        return -1;
+                    }else{
+                        input.getSecondValue(i);
+                        output.str += " " + input.operator + " " + input.num2; 
+                        calculator.calculator()
+                }   
+            }
+        }
+            output.result = input.num1;
+            output.print();
+        } 
+    main();
+      
+}
+    </script>
+</body>
+</html>
