@@ -17,7 +17,6 @@
     input.getFirstValue = function(){
         this.num1 = Number(prompt("1번째 수를 입력해주세요"));
        }
-
        input.getOperator = function(){
         while(true){
             this.operator = prompt('연산자를 입력해주세요'); 
@@ -37,30 +36,28 @@
        }
  
        calculator.calculator = function(){
-            switch (this.operator) {
+            switch (input.operator) {
                 case '+' :
-                this.num1 += this.num2;
+                input.num1 += input.num2;
                 break;
                 case '-' :
-                this.num1 -= this.num2;
+                input.num1 -= input.num2;
                 break;
                 case '*' :
-                this.num1 *= this.num2;
+                input.num1 *= input.num2;
                 break;
                 case '/':
-                this.num1 /= this.num2;
+                input.num1 /= input.num2;
                 break;
         
             }
      
        }
-
        output.print = function(){
            var result = document.getElementById('output');
            var lastStr = this.str + " = " + this.result; 
            result.innerHTML = lastStr;
        }
-
        function main (){
            input.getFirstValue();
            input.operator = "";
