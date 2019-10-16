@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            font-family : monospace;
+            font-size : 1.5em;
+        }
+        h1 {font-weight : bolder;
+            font-style : oblique;
+            text-decoration : underline;
+            color :salmon;
+            background-color :aqua;
+            Letter-spacing : 1em;
+            text-align : center;
+            
+        }
+        #output {
+            background-color : gold;
+            color : green;
+        }
+    </style>
+</head>
+<body>
+    <h1>계산기</h1>
+  
+    수식을 입력하세요 : <input type="text" id="answer">
+    <button id='btn' onclick="runCalculator()">전송</button><br>
+    결과 : <div id="output"></div>
+  
+   <script>
+        var input = {};
+        var calculator = {};
+        var output = {}; 
+
+        //문자열 배열로 분리
+        input.separation = function(answer) {
+            this.answerList = answer.split(" ");
+            
+        };
+     
+    //배열 비었나 확인
+    input.empty = function(){
+        return this.answerList.length === 0 ;
+    }
+
+        //연산자 
+        input.getOperator = function(){
+            var operator = this.answerList.shift();
+                if(operator === '+' || operator === '-' || 
+                    operator === '*' || operator === '/' ){
+                       return operator;
+                        }else{
+                         return operator = -1;
+                        }
+                    }
+  
+    
+        //나머지 숫자
+        input.getValue = function(){
+              return this.answerList.shift();
+        }
+        
+        //연산
+        calculator.calculator = function(result, operator, number){
+                switch (operator) {
+                    case '+' :
+                    result += number;
+                    break;
+                    case '-' :
+                    result -= number;
+                    break;
+                    case '*' :
+                    result *= number;
+                    break;
+                    case '/':
+                    result /= number;
+                    break;
+                    default :
+                    operator = -1;
+                }
+            return result;
+        }
+
+        //화면 출력
+        output.print = function(rightAnswer, operator){
+            var answer =document.getElementById('answer');
+            var result = document.getElementById('output');
+            if(operator === -1){
+                result.textContent = "다시 입력하세요."
+                answer.value = "";
+            }else{
+              var lastStr = this.str + " = " + rightAnswer; 
+                 result.innerHTML = lastStr;
+             }
+        }
+
+
+    function runCalculator(){
+        var answer = document.getElementById('answer').value;
+        input.separation(answer);
+        var result = Number(input.getValue());
+        output.str = result;
+        while(!input.empty()){
+            var operator = input.getOperator();
+            var number = Number(input.getValue());
+            output.str += " " + operator + " " + number + " ";
+            result = calculator.calculator(result, operator, number);
+        }
+       output.print(result, operator); 
+    }
+       
+
+    </script>
+</body>
+</html>
