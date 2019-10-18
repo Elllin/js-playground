@@ -47,7 +47,7 @@
     
 }
 
-.btn {
+.buttonArea button {
     background-color: wheat;
     margin: 20px;
 }
@@ -64,44 +64,67 @@ body{
     <div class="text">HELLO</div>
     <div class="buttonArea"></div>
     <div>    
-        <button onclick="reverse()" id="reverseBtn">reverse</button>
+        <button onclick="reverse(0,4)" id="reverseBtn">reverse</button>
         <button onclick="pushLeft()" id="pushLeftBtn">push Left</button>
         <button onclick="pushRight()" id="pushRightBtn">push Right</button>
     </div>  
     <div class="correct">일치합니다.</div>
     <script>
+        
+        var puzzle = {};
+
         //hello 버튼 추가
         function addButton(){
-        var str = document.querySelector('.text').textContent;
+            str = document.querySelector('.text').textContent;
+            puzzle.array = str.split('');
         var buttonArea = document.querySelector('.buttonArea');
-        for(var i=0; i<str.length; i++){
+        for(var i=0; i < puzzle.array.length; i++){
              var button = document.createElement('button');
-             button.innerHTML = str[i];
-             button.classList = 'btn';
+             button.innerHTML = puzzle.array[i];
+             button.classList = 'btn' ;
              buttonArea.appendChild(button);
             }
         }
         addButton();
 
-        //버튼뒤집기
-        function reverse(){
-            var btn1 = document.getElementById('reverseBtn');
-            console.log(btn1.textContent);
+             // 버튼 텍스트 바꾸기
+             function btnTextChange(){
+                var btn = document.getElementsByClassName('btn');
+                for(var i =0; i < puzzle.array.length; i++){
+                    btn[i].innerHTML = puzzle.array[i];
+                }
+            }
 
+        //버튼뒤집기
+        function reverse(start, end){
+           if(start >= end){
+             btnTextChange();
+           }else{
+           var temp = puzzle.array[start];
+           puzzle.array[start] = puzzle.array[end];
+           puzzle.array[end] = temp;
+            return reverse(start+1, end-1);
         }
+    }
+
+   
 
         //왼쪽으로 밀어내기
         function pushLeft(){
-            var btn2 = document.getElementById('pushLeftBtn');
-            console.log(btn2.textContent);
+            var pop = puzzle.array.pop();
+            puzzle.array.unshift(pop);
+             btnTextChange();
         }
 
         //오른쪽으로 밀어내기
         function pushRight(){
-            var btn2 = document.getElementById('pushRightBtn');
-            console.log(btn2.textContent);
+            var shift = puzzle.array.shift();
+            puzzle.array.push(shift);
+            btnTextChange();
         }
         
+    
+
     </script>
    
    </body>      
