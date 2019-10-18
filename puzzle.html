@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        font-size: 20px;
+    }
+.text{
+
+    width:300px;
+    text-align: center;
+    background-color: skyblue;
+    font-size: 30px;
+    Letter-spacing: 15px;
+    width: 350px;
+    border :blanchedalmond solid 3px;
+}
+
+#reverseBtn{
+    background-color :thistle
+}
+#pushLeftBtn {
+    background-color:violet;
+    
+}
+#pushRightBtn {
+    background-color: blueviolet;
+}
+#reverseBtn,#pushLeftBtn,#pushRightBtn{
+    margin-bottom: 20px;
+    margin-right:20px;
+}
+.correct {
+    border:solid skyblue 3px;
+    width: 350px;
+    height: 40px;
+    text-align:center;
+    letter-spacing: 10px;
+    font-weight:bold;
+    Line-height: 35px;
+    background-color: blanchedalmond;
+    
+}
+
+.btn {
+    background-color: wheat;
+    margin: 20px;
+}
+body{
+    border: solid black 3px;
+    width:400px;
+    padding: 70px;
+    
+}
+
+
+</style>
+<body>
+    <div class="text">HELLO</div>
+    <div class="buttonArea"></div>
+    <div>    
+        <button onclick="reverse()" id="reverseBtn">reverse</button>
+        <button onclick="pushLeft()" id="pushLeftBtn">push Left</button>
+        <button onclick="pushRight()" id="pushRightBtn">push Right</button>
+    </div>  
+    <div class="correct">일치합니다.</div>
+    <script>
+        //hello 버튼 추가
+        function addButton(){
+        var str = document.querySelector('.text').textContent;
+        var buttonArea = document.querySelector('.buttonArea');
+        for(var i=0; i<str.length; i++){
+             var button = document.createElement('button');
+             button.innerHTML = str[i];
+             button.classList = 'btn';
+             buttonArea.appendChild(button);
+            }
+        }
+        addButton();
+
+        //버튼뒤집기
+        function reverse(){
+            var btn1 = document.getElementById('reverseBtn');
+            console.log(btn1.textContent);
+
+        }
+
+        //왼쪽으로 밀어내기
+        function pushLeft(){
+            var btn2 = document.getElementById('pushLeftBtn');
+            console.log(btn2.textContent);
+        }
+
+        //오른쪽으로 밀어내기
+        function pushRight(){
+            var btn2 = document.getElementById('pushRightBtn');
+            console.log(btn2.textContent);
+        }
+        
+    </script>
+   
+   </body>      
+</html>
