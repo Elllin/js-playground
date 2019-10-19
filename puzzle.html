@@ -98,12 +98,17 @@ body{
             //글씨가 동일한지 판단
             function judgeSame(){
                 result = document.getElementById('result');
+                var count = 0;
                 for(var i = 0; i < puzzle.array.length; i++){
+                    console.log(puzzle.array[i], puzzle.str[i]);
                  if(puzzle.array[i] === puzzle.str[i]){
-                    var str = "일치합니다.";
-                 }else{
-                     str = "일치하지 않습니다."
+                    count += 1;
                  }
+              }
+              if(count === 5){
+                  var str = "일치합니다."
+              }else{
+                var str = "일치하지않습니다."
               }
               result.innerHTML = str;
               //console.log(str);
