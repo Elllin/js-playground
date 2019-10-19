@@ -35,7 +35,7 @@
     margin-bottom: 20px;
     margin-right:20px;
 }
-.correct {
+#result {
     border:solid skyblue 3px;
     width: 350px;
     height: 40px;
@@ -68,15 +68,15 @@ body{
         <button onclick="pushLeft()" id="pushLeftBtn">push Left</button>
         <button onclick="pushRight()" id="pushRightBtn">push Right</button>
     </div>  
-    <div class="correct">일치합니다.</div>
+    <div id="result"></div>
     <script>
         
         var puzzle = {};
 
         //hello 버튼 추가
         function addButton(){
-            str = document.querySelector('.text').textContent;
-            puzzle.array = str.split('');
+            puzzle.str = document.querySelector('.text').textContent;
+            puzzle.array = puzzle.str.split('');
         var buttonArea = document.querySelector('.buttonArea');
         for(var i=0; i < puzzle.array.length; i++){
              var button = document.createElement('button');
@@ -95,6 +95,20 @@ body{
                 }
             }
 
+            //글씨가 동일한지 판단
+            function judgeSame(){
+                result = document.getElementById('result');
+                for(var i = 0; i < puzzle.array.length; i++){
+                 if(puzzle.array[i] === puzzle.str[i]){
+                    var str = "일치합니다.";
+                 }else{
+                     str = "일치하지 않습니다."
+                 }
+              }
+              result.innerHTML = str;
+              //console.log(str);
+            }
+
         //버튼뒤집기
         function reverse(start, end){
            if(start >= end){
@@ -105,6 +119,7 @@ body{
            puzzle.array[end] = temp;
             return reverse(start+1, end-1);
         }
+        judgeSame();
     }
 
    
@@ -114,6 +129,8 @@ body{
             var pop = puzzle.array.pop();
             puzzle.array.unshift(pop);
              btnTextChange();
+             judgeSame();
+
         }
 
         //오른쪽으로 밀어내기
@@ -121,8 +138,11 @@ body{
             var shift = puzzle.array.shift();
             puzzle.array.push(shift);
             btnTextChange();
+            judgeSame();
         }
         
+   
+    
     
 
     </script>
