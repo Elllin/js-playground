@@ -64,9 +64,9 @@ body{
     <div class="text">HELLO</div>
     <div class="buttonArea"></div>
     <div>    
-        <button onclick="reverse(0,4)" id="reverseBtn">reverse</button>
-        <button onclick="pushLeft()" id="pushLeftBtn">push Left</button>
-        <button onclick="pushRight()" id="pushRightBtn">push Right</button>
+        <button id="reverseBtn">reverse</button>
+        <button id="pushLeftBtn">push Left</button>
+        <button  id="pushRightBtn">push Right</button>
     </div>  
     <div id="result"></div>
     <script>
@@ -118,17 +118,24 @@ body{
             }
 
         //버튼뒤집기
-        function reverse(start, end){
-           if(start >= end){
-             btnTextChange();
-           }else{
-           var temp = puzzle.array[start];
-           puzzle.array[start] = puzzle.array[end];
-           puzzle.array[end] = temp;
-            return reverse(start+1, end-1);
+
+            
+                function reverse(start, end){
+                if(start >= end){
+                    btnTextChange();
+                }else{
+                var temp = puzzle.array[start];
+                puzzle.array[start] = puzzle.array[end];
+                puzzle.array[end] = temp;
+                    return reverse(start+1, end-1);
+             }
+            judgeSame();
+           }
+        
+        function reverse1(){
+            reverse(0,4);
         }
-        judgeSame();
-    }
+
 
         //왼쪽으로 밀어내기
         function pushLeft(){
@@ -147,6 +154,9 @@ body{
             judgeSame();
         }
         
+        document.getElementById('reverseBtn').addEventListener('click',reverse1);
+        document.getElementById('pushLeftBtn').addEventListener('click',pushLeft);
+        document.getElementById('pushRightBtn').addEventListener('click',pushRight);
     </script>
    
    </body>      
