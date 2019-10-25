@@ -83,11 +83,11 @@ body{
         //10개 단어 추가
         function getWord(){
             var word = ['apple', 'javascript', 'document', 'puzzle', 'coding', 'array'];
-            var length = word.length
-            var randomNumber = Math.floor(Math.random()*length);
+            var randomNumber = Math.floor(Math.random()*word.length);
             puzzle.word = word[randomNumber];
             var textArea = document.querySelector('.textArea');
             textArea.textContent = puzzle.word;
+         
         }
         getWord();
 
@@ -128,7 +128,7 @@ body{
                      break;
                  }
               }
-              if(count === 5){
+              if(count === puzzle.array.length){
                   var str = "일치합니다."
               }else{
                 var str = "일치하지않습니다."
@@ -153,7 +153,7 @@ body{
            }
         
         function reverse1(){
-            reverse(0,4);
+            reverse(0,puzzle.array.length-1);
         }
 
 
