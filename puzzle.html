@@ -82,30 +82,32 @@ body{
 
         //10개 단어 추가
         function getWord(){
-            var word = ['apple', 'javascript', 'document', 'puzzle', 'coding', 'array'];
+            var word = ['apple', 'javascript', 'document', 'puzzle', 'coding', 'array', 'function', 'console'];
             var randomNumber = Math.floor(Math.random()*word.length);
             puzzle.word = word[randomNumber];
             var textArea = document.querySelector('.textArea');
             textArea.textContent = puzzle.word;
-         
         }
         getWord();
 
-    
-        //hello 버튼 추가
-        function addButton(){
-            puzzle.str = document.querySelector('.textArea').textContent;
-            puzzle.array = puzzle.str.split('');
-        var buttonArea = document.querySelector('.buttonArea');
-        for(var i=0; i < puzzle.array.length; i++){
-             var button = document.createElement('button');
-             button.innerHTML = puzzle.array[i];
-             button.classList = 'btn' ;
-        
-             buttonArea.appendChild(button);
+   
+
+        //버튼에 단어 무작위로 추가
+        function add_word_btn(){
+            puzzle.array = puzzle.word.split('');
+            var word = puzzle.word.split('');
+            var buttonArea = document.querySelector('.buttonArea');
+            for(var i = 0; i < puzzle.array.length; i++) {
+                var button = document.createElement('button');
+                var randomNumber = Math.floor(Math.random()*(puzzle.array.length-i));
+                 button.innerHTML = word[randomNumber];
+                 button.classList = 'btn';
+                 buttonArea.appendChild(button);
+                 puzzle.array[i] = word.splice(randomNumber,1); 
+                
             }
         }
-        addButton();
+        add_word_btn();
 
 
              // 버튼 텍스트 바꾸기
@@ -122,7 +124,7 @@ body{
                 result = document.getElementById('result');
                 var count = 0;
                 for(var i = 0; i < puzzle.array.length; i++){
-                 if(puzzle.array[i] === puzzle.str[i]){
+                 if(puzzle.array[i] === puzzle.word[i]){
                     count += 1;
                  }else{
                      break;
