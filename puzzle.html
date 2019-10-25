@@ -10,9 +10,9 @@
     *{
         font-size: 20px;
     }
-.text{
+.textArea{
 
-    width:300px;
+    height: 50px;
     text-align: center;
     background-color: skyblue;
     font-size: 30px;
@@ -49,7 +49,14 @@
 
 .buttonArea button {
     background-color: wheat;
-    margin: 20px;
+    margin : 20px 5px 20px;
+  
+}
+.buttonArea {
+     width:350px;
+     text-align: center;
+     display : grid;
+     grid-auto-flow : column;
 }
 body{
     border: solid black 3px;
@@ -61,7 +68,7 @@ body{
 
 </style>
 <body>
-    <div class="text">HELLO</div>
+    <div class="textArea"></div>
     <div class="buttonArea"></div>
     <div>    
         <button id="reverseBtn">reverse</button>
@@ -72,10 +79,22 @@ body{
     <script>
         
         var puzzle = {};
+
+        //10개 단어 추가
+        function getWord(){
+            var word = ['apple', 'javascript', 'document', 'puzzle', 'coding', 'array'];
+            var length = word.length
+            var randomNumber = Math.floor(Math.random()*length);
+            puzzle.word = word[randomNumber];
+            var textArea = document.querySelector('.textArea');
+            textArea.textContent = puzzle.word;
+        }
+        getWord();
+
     
         //hello 버튼 추가
         function addButton(){
-            puzzle.str = document.querySelector('.text').textContent;
+            puzzle.str = document.querySelector('.textArea').textContent;
             puzzle.array = puzzle.str.split('');
         var buttonArea = document.querySelector('.buttonArea');
         for(var i=0; i < puzzle.array.length; i++){
