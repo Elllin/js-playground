@@ -13,69 +13,82 @@
 .textArea{
 
     height: 50px;
-    text-align: center;
     background-color: skyblue;
     font-size: 30px;
     Letter-spacing: 15px;
-    width: 350px;
+    /*width: 350px;*/
     border :blanchedalmond solid 3px;
 }
 
 #reverseBtn{
-    background-color :thistle
+    background-color :thistle;
+    margin-right:20px;
 }
 #pushLeftBtn {
+    margin-right:20px;
     background-color:violet;
     
 }
 #pushRightBtn {
     background-color: blueviolet;
 }
-#reverseBtn,#pushLeftBtn,#pushRightBtn{
+
+.pushBtn{
     margin-bottom: 20px;
-    margin-right:20px;
+    display : grid;
+    grid-auto-flow :column;
+    
 }
 #result {
     border:solid skyblue 3px;
-    width: 350px;
-    height: 40px;
-    text-align:center;
+    /*width: 350px;*/
+    height: 50px;
     letter-spacing: 10px;
     font-weight:bold;
-    Line-height: 35px;
+    Line-height: 42px;
     background-color: blanchedalmond;
-    
 }
 
 .buttonArea button {
     background-color: wheat;
     margin : 20px 5px 20px;
-  
 }
 .buttonArea {
-     width:350px;
-     text-align: center;
+     /*width:350px;*/
      display : grid;
      grid-auto-flow : column;
 }
-body{
+.area{
+    width: 500px;
+}
+.inn{
+    text-align :center;
     border: solid black 3px;
-    width:400px;
-    padding: 70px;
-    
+    padding: 60px;
+}
+.resultCount{
+    border:solid 3px powderblue;
+    margin-bottom:20px;
+    height: 30px;
+    background-color:palevioletred;
 }
 
 
 </style>
 <body>
-    <div class="textArea"></div>
-    <div class="buttonArea"></div>
-    <div>    
-        <button id="reverseBtn">reverse</button>
-        <button id="pushLeftBtn">push Left</button>
-        <button  id="pushRightBtn">push Right</button>
-    </div>  
-    <div id="result"></div>
+    <div class="area">
+        <div class="inn">
+            <div class="resultCount"></div>
+            <div class="textArea"></div>
+            <div class="buttonArea"></div>
+            <div class="pushBtn">    
+                <button id="reverseBtn">reverse</button>
+                <button id="pushLeftBtn">push Left</button>
+                <button  id="pushRightBtn">push Right</button>
+            </div>  
+            <div id="result"></div>
+        </div>
+    </div>
     <script>
         
         var puzzle = {};
@@ -87,28 +100,23 @@ body{
             puzzle.word = word[randomNumber];
             var textArea = document.querySelector('.textArea');
             textArea.textContent = puzzle.word;
+            puzzle.array = puzzle.word.split('');
         }
         getWord();
 
-   
-
-        //버튼에 단어 무작위로 추가
+        //버튼추가
         function add_word_btn(){
-            puzzle.array = puzzle.word.split('');
-            var word = puzzle.word.split('');
             var buttonArea = document.querySelector('.buttonArea');
-            for(var i = 0; i < puzzle.array.length; i++) {
+       
+            for(var i = 0; i < puzzle.word.length; i++) {
                 var button = document.createElement('button');
-                var randomNumber = Math.floor(Math.random()*(puzzle.array.length-i));
-                 button.innerHTML = word[randomNumber];
+                 button.innerHTML = puzzle.word[i];
                  button.classList = 'btn';
                  buttonArea.appendChild(button);
-                 puzzle.array[i] = word.splice(randomNumber,1); 
-                
             }
         }
         add_word_btn();
-
+       
 
              // 버튼 텍스트 바꾸기
              function btnTextChange(){
@@ -122,27 +130,20 @@ body{
             //글씨가 동일한지 판단
             function judgeSame(){
                 result = document.getElementById('result');
-                var count = 0;
-                for(var i = 0; i < puzzle.array.length; i++){
-                 if(puzzle.array[i] === puzzle.word[i]){
-                    count += 1;
+               answer = puzzle.array.join('');
+                for(var i = 0; i < puzzle.word.length; i++){
+                 if(answer === puzzle.word){
+                    result.innerHTML = "일치합니다."
                  }else{
-                     break;
+                    result.innerHTML = "일치하지않습니다."
                  }
-              }
-              if(count === puzzle.array.length){
-                  var str = "일치합니다."
-              }else{
-                var str = "일치하지않습니다."
-              }
-              result.innerHTML = str;
-    
+               }
             }
 
-        //버튼뒤집기
 
+        //버튼뒤집기
             
-                function reverse(start, end){
+              /*  function reverse(start, end){
                 if(start >= end){
                     btnTextChange();
                 }else{
@@ -156,6 +157,17 @@ body{
         
         function reverse1(){
             reverse(0,puzzle.array.length-1);
+        }*/
+
+        function reverse1(){
+            var temp = [];
+            while(puzzle.array.length !== 0){
+                var pop = puzzle.array.pop();
+                temp.push(pop);
+                }
+            puzzle.array = temp; 
+            btnTextChange();
+            judgeSame();
         }
 
 
@@ -165,7 +177,6 @@ body{
             puzzle.array.unshift(pop);
              btnTextChange();
              judgeSame();
-
         }
 
         //오른쪽으로 밀어내기
@@ -175,6 +186,29 @@ body{
             btnTextChange();
             judgeSame();
         }
+
+          //버튼에 단어 무작위로 추가
+     
+        function runRandom(){
+            var toggle = Math.floor(Math.random() * 2 );
+            var randomNumber = Math.floor(Math.random() * (puzzle.word.length - 1) );
+            for(var i = 0; i <= randomNumber; i++){
+                if(toggle === 0) {    
+                     pushRight();
+                }else{
+                    pushLeft();
+                }
+             }
+           var toggleBoolean = Math.floor(Math.random() * 2 ) === 1;
+           if(toggleBoolean){
+               reverse1();
+           }
+        }
+        runRandom();
+        
+    
+
+
         
         document.getElementById('reverseBtn').addEventListener('click',reverse1);
         document.getElementById('pushLeftBtn').addEventListener('click',pushLeft);
