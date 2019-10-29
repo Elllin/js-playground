@@ -127,18 +127,27 @@
             }
 
 
+            puzzle.count = "";
             //글씨가 동일한지 판단
             function judgeSame(){
-                result = document.getElementById('result');
-               answer = puzzle.array.join('');
+                var resultCount = document.querySelector('.resultCount');
+                var result = document.getElementById('result');
+                var answer = puzzle.array.join('');
                 for(var i = 0; i < puzzle.word.length; i++){
                  if(answer === puzzle.word){
-                    result.innerHTML = "일치합니다."
+                     result.innerHTML = "일치합니다."
                  }else{
                     result.innerHTML = "일치하지않습니다."
-                 }
+                }
                }
+               if(result.innerHTML === '일치합니다.'){
+                   puzzle.count += 'O';
+                } 
+               resultCount.textContent = puzzle.count;
             }
+
+            
+            
 
 
         //버튼뒤집기
