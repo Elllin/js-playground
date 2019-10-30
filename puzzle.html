@@ -107,7 +107,7 @@
         //버튼추가
         function add_word_btn(){
             var buttonArea = document.querySelector('.buttonArea');
-       
+            
             for(var i = 0; i < puzzle.word.length; i++) {
                 var button = document.createElement('button');
                  button.innerHTML = puzzle.word[i];
@@ -116,6 +116,17 @@
             }
         }
         add_word_btn();
+
+        //버튼제거
+        function removeBtn(){
+            var parent = document.querySelector('.buttonArea');
+            var btn = document.getElementsByClassName('btn');
+            var length = btn.length;
+            for(var i = 0; i < length; i++){
+                parent.removeChild(btn[0]);
+            }
+        }
+
        
 
              // 버튼 텍스트 바꾸기
@@ -127,26 +138,40 @@
             }
 
 
-            puzzle.count = "";
             //글씨가 동일한지 판단
+            puzzle.count = 0;
             function judgeSame(){
-                var resultCount = document.querySelector('.resultCount');
                 var result = document.getElementById('result');
                 var answer = puzzle.array.join('');
-                for(var i = 0; i < puzzle.word.length; i++){
-                 if(answer === puzzle.word){
-                     result.innerHTML = "일치합니다."
-                 }else{
+                if(answer === puzzle.word){
+                    result.innerHTML = "일치합니다."
+                    complete();
+                    newQuestion();
+                }else{
                     result.innerHTML = "일치하지않습니다."
                 }
-               }
-               if(result.innerHTML === '일치합니다.'){
-                   puzzle.count += 'O';
-                } 
-               resultCount.textContent = puzzle.count;
             }
 
             
+            //3개 맞추면 성공알람 띄우기
+            function complete(){
+                var resultCount = document.querySelector('.resultCount');
+                    resultCount.textContent += 'O ';
+                    puzzle.count++;
+                    if(puzzle.count === 3){
+                        alert('Thank you for playing!');
+                }
+            }
+
+
+            //새로운 문제 내기
+            function newQuestion(){
+                getWord();
+                removeBtn();
+                add_word_btn();
+                runRandom();
+            }
+
             
 
 
