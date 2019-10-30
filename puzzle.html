@@ -91,34 +91,31 @@
     </div>
     <script>
         
-        var puzzle = {};
+        var puzzle = {count:0};
 
         //10개 단어 추가
-        function getWord(){
+        puzzle.getWord = function(){
             var word = ['apple', 'javascript', 'document', 'puzzle', 'coding', 'array', 'function', 'console'];
             var randomNumber = Math.floor(Math.random()*word.length);
-            puzzle.word = word[randomNumber];
+            this.word = word[randomNumber];
             var textArea = document.querySelector('.textArea');
-            textArea.textContent = puzzle.word;
-            puzzle.array = puzzle.word.split('');
+            textArea.textContent = this.word;
+            this.array = this.word.split('');
         }
-        getWord();
 
         //버튼추가
-        function add_word_btn(){
+        puzzle.add_word_btn = function(){
             var buttonArea = document.querySelector('.buttonArea');
-            
-            for(var i = 0; i < puzzle.word.length; i++) {
+            for(var i = 0; i < this.array.length; i++) {
                 var button = document.createElement('button');
-                 button.innerHTML = puzzle.word[i];
+                 button.innerHTML = this.array[i];
                  button.classList = 'btn';
                  buttonArea.appendChild(button);
             }
         }
-        add_word_btn();
 
         //버튼제거
-        function removeBtn(){
+        puzzle.removeBtn = function(){
             var parent = document.querySelector('.buttonArea');
             var btn = document.getElementsByClassName('btn');
             var length = btn.length;
@@ -130,23 +127,22 @@
        
 
              // 버튼 텍스트 바꾸기
-             function btnTextChange(){
+             puzzle.btnTextChange = function(){
                 var btn = document.getElementsByClassName('btn');
-                for(var i =0; i < puzzle.array.length; i++){
-                    btn[i].innerHTML = puzzle.array[i];
+                for(var i =0; i < this.array.length; i++){
+                    btn[i].innerHTML = this.array[i];
                 }
             }
 
 
             //글씨가 동일한지 판단
-            puzzle.count = 0;
-            function judgeSame(){
+            puzzle.judgeSame = function(){
                 var result = document.getElementById('result');
-                var answer = puzzle.array.join('');
-                if(answer === puzzle.word){
+                var answer = this.array.join('');
+                if(answer === this.word){
                     result.innerHTML = "일치합니다."
-                    complete();
-                    newQuestion();
+                    this.complete();
+                    this.newQuestion();
                 }else{
                     result.innerHTML = "일치하지않습니다."
                 }
@@ -154,100 +150,105 @@
 
             
             //3개 맞추면 성공알람 띄우기
-            function complete(){
+            puzzle.complete = function(){
                 var resultCount = document.querySelector('.resultCount');
                     resultCount.textContent += 'O ';
-                    puzzle.count++;
-                    if(puzzle.count === 3){
+                    this.count++;
+                    var max = 3
+                    if(this.count === max){
                         alert('Thank you for playing!');
                 }
             }
 
-
-            //새로운 문제 내기
-            function newQuestion(){
-                getWord();
-                removeBtn();
-                add_word_btn();
-                runRandom();
-            }
-
             
-
-
-        //버튼뒤집기
             
-              /*  function reverse(start, end){
+            
+            
+            //버튼뒤집기
+            
+            /*  function reverse(start, end){
                 if(start >= end){
                     btnTextChange();
                 }else{
-                var temp = puzzle.array[start];
+                    var temp = puzzle.array[start];
                 puzzle.array[start] = puzzle.array[end];
                 puzzle.array[end] = temp;
                     return reverse(start+1, end-1);
-             }
+                }
             judgeSame();
            }
-        
+           
         function reverse1(){
             reverse(0,puzzle.array.length-1);
         }*/
-
+        
         function reverse1(){
             var temp = [];
             while(puzzle.array.length !== 0){
                 var pop = puzzle.array.pop();
                 temp.push(pop);
-                }
+            }
             puzzle.array = temp; 
-            btnTextChange();
-            judgeSame();
+            puzzle.btnTextChange();
+            puzzle.judgeSame();
         }
-
+        
 
         //왼쪽으로 밀어내기
         function pushLeft(){
             var pop = puzzle.array.pop();
             puzzle.array.unshift(pop);
-             btnTextChange();
-             judgeSame();
+            puzzle.btnTextChange();
+            puzzle.judgeSame();
         }
-
+        
         //오른쪽으로 밀어내기
         function pushRight(){
             var shift = puzzle.array.shift();
             puzzle.array.push(shift);
-            btnTextChange();
-            judgeSame();
+            puzzle.btnTextChange();
+            puzzle.judgeSame();
         }
 
-          //버튼에 단어 무작위로 추가
+        //버튼에 단어 무작위로 추가
      
-        function runRandom(){
+        puzzle.runRandom = function(){
             var toggle = Math.floor(Math.random() * 2 );
-            var randomNumber = Math.floor(Math.random() * (puzzle.word.length - 1) );
+            var randomNumber = Math.floor(Math.random() * (this.word.length - 1) );
             for(var i = 0; i <= randomNumber; i++){
                 if(toggle === 0) {    
                      pushRight();
-                }else{
+                    }else{
                     pushLeft();
                 }
              }
-           var toggleBoolean = Math.floor(Math.random() * 2 ) === 1;
-           if(toggleBoolean){
-               reverse1();
+             var toggleBoolean = Math.floor(Math.random() * 2 ) === 1;
+             if(toggleBoolean){
+                 reverse1();
            }
         }
-        runRandom();
-        
     
-
+        
+        puzzle.init = function(){
+            this.getWord();
+            this.add_word_btn();
+            this.runRandom();
+        }
+        puzzle.init();
+        
+        
+        //새로운 문제 내기
+        puzzle.newQuestion = function(){
+            this.removeBtn();
+            this.init();
+        
+        }
 
         
         document.getElementById('reverseBtn').addEventListener('click',reverse1);
         document.getElementById('pushLeftBtn').addEventListener('click',pushLeft);
         document.getElementById('pushRightBtn').addEventListener('click',pushRight);
     </script>
-   
-   </body>      
+    
+</body>      
 </html>
