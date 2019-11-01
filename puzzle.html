@@ -71,6 +71,7 @@
 }
 .area{
     width: 500px;
+    float: left;
 }
 .inn{
     text-align :center;
@@ -82,6 +83,18 @@
     margin-bottom:20px;
     height: 30px;
     background-color:palevioletred;
+}
+.recode{
+    position: relative;
+    left: 30px;
+    top: 30px;
+    
+}
+.rankArea {
+    position: relative;
+    left: 30px;
+    top: 200px;
+    
 }
 
 
@@ -99,11 +112,16 @@
                 <button  id="pushRightBtn">push Right</button>
             </div>  
             <div id="result"></div>
+            <button id="ranking">ranking</button>
         </div>
     </div>
+    <div class="recode">기록 </div>
+    <div class="rankArea">순위</div>
     <script>
         
-        var puzzle = {count:0, startTime:Date.now()};
+        var puzzle = {count:0, rank:[], i:0, name:[]};
+
+        
         
         //10개 단어 추가
         puzzle.getWord = function(){
@@ -152,6 +170,7 @@
                
         //시간 측정 시작
         puzzle.getTime = function(){
+            this.startTime = Date.now();
             var time = document.querySelector('.time');
             this.nowTime = setInterval(function(){
                 puzzle.second = (Date.now() - puzzle.startTime) / 1000;
@@ -160,11 +179,7 @@
         }
         puzzle.getTime();
 
-        //시간 측정 종료
-        
-        puzzle.clearTime = function(){
-            clearInterval(this.nowTime);
-        }
+
         
             puzzle.judgeSame = function(){
                 return (this.array.join('') === this.word);
@@ -177,32 +192,74 @@
                 var result = document.getElementById('result');
                 if(this.judgeSame()){
                     result.innerHTML = "일치합니다."
-                    setTimeout('stopDisplay()',400);
+                    setTimeout('resetWord()',400);
                 }else{
                     result.innerHTML = "일치하지않습니다."
                 }
             }
             
-            //1초뒤에 리셋
-            function stopDisplay(){
+            //1초뒤에 단어 리셋
+            function resetWord(){
                 puzzle.removeBtn();
                 puzzle.init();
             }
-            
+
+      
             //3개 맞추면 성공알람 띄우기
             puzzle.complete = function(){
                 var resultCount = document.querySelector('.resultCount');
                 if(this.judgeSame()){
                     resultCount.textContent += 'O ';
                     this.count++;
-                    var max = 3
+                    var max = 2
                     if(this.count === max){
-                            this.clearTime();
-                            setTimeout(function(){
-                             alert('걸린시간 : ' + puzzle.second);
-                            },100);
-                        }
+                        clearInterval(this.nowTime);
+                        setTimeout(function(){
+                            alert('걸린시간 : ' + puzzle.second);
+                            puzzle.recode();
+                        },100);
+                        setTimeout('puzzle.resetDisplay()', 500);
+                    }
                 }
+                
+            }
+
+            //화면 리셋
+            puzzle.resetDisplay = function(){
+                var resultCount = document.querySelector('.resultCount');
+                resultCount.textContent = ' ';
+                resetWord();
+                this.getTime();
+                this.count = 0;
+            }
+            
+            //랭킹 세우기
+            function ranking(){
+                for(var i = 0; i < puzzle.rank.length-1; i++){
+                    for(var j = (i + 1); j < puzzle.rank.length; j++){
+                        if(puzzle.rank[i] > puzzle.rank[j]){
+                            var temp = puzzle.rank[i];
+                            puzzle.rank[i] = puzzle.rank[j];
+                            puzzle.rank[j] = temp; 
+                            temp = puzzle.name[i];
+                            puzzle.name[i] = puzzle.name[j];
+                            puzzle.name[j] = temp;
+                        }
+                    }
+                }
+                var rankArea = document.querySelector('.rankArea');
+                for(var i=0; i < puzzle.rank.length; i++){
+                    rankArea.innerHTML += `<li> ${i + 1}위 성함 : ${puzzle.name[i]}, 기록 : ${puzzle.rank[i]}</li>`;
+                }
+            }
+                
+
+            puzzle.recode = function(){
+                this.name[this.i] = prompt('성함을 입력하세요');
+                var recode = document.querySelector('.recode');
+                recode.innerHTML += '<li>' + this.second +' 이름 : ' + this.name[this.i] + '</li>';
+                this.rank[this.i] = this.second;
+                this.i++;
             }
             
             
@@ -233,7 +290,7 @@
              }
              this.array = temp; 
              this.btnTextChange();
-             puzzle.updateDisplay();
+             this.updateDisplay();
             }   
             
             function reverse1(){
@@ -247,7 +304,7 @@
             var pop = this.array.pop();
             this.array.unshift(pop);
             this.btnTextChange();
-            puzzle.updateDisplay();
+            this.updateDisplay();
         }
         
         function pushLeft(){
@@ -261,7 +318,7 @@
             var shift = this.array.shift();
             this.array.push(shift);
             this.btnTextChange();
-            puzzle.updateDisplay();
+            this.updateDisplay();
         }
         
         function pushRight(){
@@ -286,9 +343,7 @@
                 this.reverse1();
             }
         }
-     
 
-        
         
         puzzle.init = function(){
             this.getWord();
@@ -297,10 +352,14 @@
         }
         puzzle.init();
 
+       
+
         
         document.getElementById('reverseBtn').addEventListener('click',reverse1);
         document.getElementById('pushLeftBtn').addEventListener('click',pushLeft);
         document.getElementById('pushRightBtn').addEventListener('click',pushRight);
+        document.getElementById('ranking').addEventListener('click',ranking);
+        
     </script>
     
 </body>      
