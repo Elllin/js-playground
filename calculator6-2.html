@@ -10,28 +10,33 @@
             font-family : monospace;
             font-size : 1.5em;
         }
-        h1 {font-weight : bolder;
-            font-style : oblique;
-            text-decoration : underline;
+
+        .area{
+            width: 400px;
+            border: solid 2px #ccc;
+        }
+
+       .area h1 {font-weight : bolder;
             color :salmon;
-            background-color :aqua;
+            background-color :powderblue;
             Letter-spacing : 1em;
             text-align : center;
             
         }
-        #output {
+        .area #output {
             background-color : gold;
             color : green;
         }
     </style>
 </head>
 <body>
-    <h1>계산기</h1>
-  
-    수식을 입력하세요 : <input type="text" id="answer">
-    <button id='btn' onclick="runCalculator()">전송</button><br>
-    결과 : <div id="output"></div>
-  
+    <div class="area">
+        <h1>계산기</h1>
+    
+        수식을 입력하세요 : <input type="text" id="answer">
+        <button id='btn' onclick="runCalculator()">전송</button><br>
+        결과 : <div id="output"></div>
+    </div>
    <script>
         var input = {};
         var calculator = {};
