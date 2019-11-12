@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,76 +8,137 @@
     <title>Document</title>
     <style>
         /* reset */
-html,body{width:100%;height:100%}
-body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,button,select{margin:0;padding:0}
-body,input,textarea,select,button,table{font-family:'Malgun Gothic',Dotum,AppleGothic,sans-serif;font-size:18px}
-img,fieldset{border:0}
-ul,ol{list-style:none}
-em,address{font-style:normal}
-a{text-decoration:none}
-a:hover,a:active,a:focus{text-decoration:underline}
+        html,
+        body {
+            width: 100%;
+            height: 100%
+        }
 
-/*style*/
+        body,
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        ul,
+        ol,
+        li,
+        dl,
+        dt,
+        dd,
+        table,
+        th,
+        td,
+        form,
+        fieldset,
+        legend,
+        input,
+        textarea,
+        button,
+        select {
+            margin: 0;
+            padding: 0
+        }
 
-        .area{
-            margin :15px;
+        body,
+        input,
+        textarea,
+        select,
+        button,
+        table {
+            font-family: 'Malgun Gothic', Dotum, AppleGothic, sans-serif;
+            font-size: 18px
+        }
+
+        img,
+        fieldset {
+            border: 0
+        }
+
+        ul,
+        ol {
+            list-style: none
+        }
+
+        em,
+        address {
+            font-style: normal
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        a:hover,
+        a:active,
+        a:focus {
+            text-decoration: underline
+        }
+
+        /*style*/
+
+        .area {
+            margin: 15px;
             width: 300px;
             border: solid 2px #ccc;
         }
-      
+
         .area .btns1,
         .area .btns2,
         .area .btns3,
-        .area .btns4{
+        .area .btns4 {
             margin: 10px auto;
             width: 220px;
         }
-        .area .result{
-            width :220px;
+
+        .area .result {
+            width: 220px;
             height: 33px;
-            margin :15px auto;
+            margin: 15px auto;
             background-color: darkblue;
-            color :white;
+            color: white;
             font-family: courier;
-            text-indent : 1em;
+            text-indent: 1em;
             /*letter-spacing :5px;*/
-            line-height :33px;
+            line-height: 33px;
         }
 
         button[class^='btn'] {
             width: 50px;
             height: 50px;
         }
-        
-        button[class^='btn']:hover{
-            color:palevioletred;
+
+        button[class^='btn']:hover {
+            color: palevioletred;
         }
 
 
-       .area h1 {
+        .area h1 {
             padding: 5px;
-            padding-left :35px;           
-            font-weight : bolder;
-            color :salmon;
-            background-color :powderblue;
-            Letter-spacing : 1em;
-            text-align : center;
-            
+            padding-left: 35px;
+            font-weight: bolder;
+            color: salmon;
+            background-color: powderblue;
+            Letter-spacing: 1em;
+            text-align: center;
+
         }
-     
     </style>
 </head>
+
 <body>
     <div class="area">
         <h1>계산기</h1>
         <div class='result'></div>
-         <div class="btns">   
+        <div class="btns">
             <div class="btns1">
                 <button class='btn'>1</button>
                 <button class='btn'>2</button>
                 <button class='btn'>3</button>
                 <button class='btn'>/</button>
-            </div>   
+            </div>
             <div class="btns2">
                 <button class='btn'>4</button>
                 <button class='btn'>5</button>
@@ -98,118 +160,134 @@ a:hover,a:active,a:focus{text-decoration:underline}
         </div>
 
     </div>
-   <script>
- 
-
-    var calculator = {separation:[],};
-    var input = {str:[],array:[],};
-    var output = {};
-
-    //배열 합치기
-    input.arrayJoin = function(){
-       return this.array.join("");
-    }
+    <script>
 
 
- //화면에 숫자 띄우기
-    output.updateDisplay = function (){
-        var result = document.querySelector('.result')
-            result.textContent = input.str;
-    }
+        var calculator = { separation: [], };
+        var input = { str: [], array: [], };
+        var output = {number:[],result:document.querySelector('.result')};
 
-
-    //화면 업데이트 호출
-    output.callFuncDiplay = function(){
-        input.str = input.arrayJoin();
-        output.updateDisplay();
-    }
-
-      //기호 숫자 구별하기
-      input.judgment = function(){
-        if(event.target.textContent === '+' || 
-            event.target.textContent === '-' || 
-            event.target.textContent === '/' || 
-            event.target.textContent === 'x'){
-                 this.array.push(' ' + event.target.textContent + ' ');
-        }else{
-               this.array.push(event.target.textContent);
+        //배열 합치기
+       /* input.arrayJoin = function () {
+            return 
         }
-    }
-
-
-    //입력받은것 배열로 만들기
-    getArray = function (event){
-        if(event.target.textContent === 'BS'){
-            input.array.pop();
-        }else{
-            input.judgment();
-        }
-        output.callFuncDiplay();
-    }
-
-   
-
-  
-    //계산하기
-    calculator.calculate = function(operator, secondNumber){
-        switch(operator){
-            case '+' :
-            this.answer += secondNumber;
-            break;
-            case '-' :
-            this.answer -= secondNumber;
-            break;
-            case 'x' :
-            this.answer *= secondNumber;
-            break;
-            case '/' :
-            this.answer /= secondNumber;
-            break;
-        }
-    }
-
-    //결과 도출
-    calculator.result = function(){
-        this.answer = this.separation[0];
-        for(var i = 1; i < this.separation.length; i += 2){
-            var operator = this.separation[i];
-            var secondNumber = this.separation[i + 1];
-            this.calculate(operator, secondNumber);
-        }
-        
-    }
- 
-
-    //결과 도출
-    function getResult(){
-        calculator.separation = input.str.split(' ');
-        for(var i = 0; i < calculator.separation.length; i++){
-            if(calculator.separation[i] !== '+' && 
-            calculator.separation[i] !== '-' && 
-            calculator.separation[i] !== '/' && 
-            calculator.separation[i] !== 'x'){
-               calculator.separation[i] = Number(calculator.separation[i]);
+*/
+        //배열 비어있으면 0을 화면에 업데이트
+        output.empty = function () {
+            if (input.array.length === 0) {
+                output.result.textContent = 0;
             }
         }
-        calculator.result();
-       input.array.push(' ' + event.target.textContent + ' ');
-       input.array.push(calculator.answer);
-       output.callFuncDiplay();
-    
-    }
+        output.empty();
 
-    //이벤트 설치
-    function setEvent(){
-        var btn = document.getElementsByClassName('btn')
-        for(var i=0; i<btn.length; i++){
-            btn[i].addEventListener('click',getArray);
+        //화면 업데이트 전 숫자만 추출
+      /*  output.filterNumber = function(){
+            var j = 0;
+            for(var i = 0; i < input.array.length; i++){
+                if(input.array[i] !== ' + ' &&
+                input.array[i] !== ' - ' &&
+                input.array[i] !== ' / ' &&
+                input.array[i] !== ' x '){
+                    this.number[j] = input.array[i];
+                    j++;
+                }
+            }
+        };*/
+
+        //화면 업데이트
+        output.updateDisplay = function () {
+           // this.filterNumber();
+            input.str = input.array.join("");
+            output.result.textContent = input.str;
+            this.empty();
         }
-        document.querySelector('.btnEqual').addEventListener('click',getResult);
-    }
-    setEvent();
-    
-    
+
+        //기호 숫자 구별하기
+        input.judgment = function () {
+            if (event.target.textContent === '+' ||
+                event.target.textContent === '-' ||
+                event.target.textContent === '/' ||
+                event.target.textContent === 'x') {
+                this.array.push(' ' + event.target.textContent + ' ');
+            } else {
+                this.array.push(event.target.textContent);
+            }
+        }
+
+
+        //입력받은것 배열로 만들기
+        getArray = function (event) {
+            if (event.target.textContent === 'BS') {
+                input.array.pop();
+            } else {
+                input.judgment();
+            }
+            output.updateDisplay();
+        }
+
+
+
+
+        //계산하기
+        calculator.calculate = function (operator, secondNumber) {
+            switch (operator) {
+                case '+':
+                    this.answer += secondNumber;
+                    break;
+                case '-':
+                    this.answer -= secondNumber;
+                    break;
+                case 'x':
+                    this.answer *= secondNumber;
+                    break;
+                case '/':
+                    this.answer /= secondNumber;
+                    break;
+            }
+        }
+
+        //결과 도출
+        calculator.result = function () {
+            this.answer = this.separation[0];
+            for (var i = 1; i < this.separation.length; i += 2) {
+                var operator = this.separation[i];
+                var secondNumber = this.separation[i + 1];
+                this.calculate(operator, secondNumber);
+            }
+
+        }
+
+
+        //결과 도출
+        function getResult() {
+            calculator.separation = input.array.join("").split(' ');
+            for (var i = 0; i < calculator.separation.length; i++) {
+                if (calculator.separation[i] !== '+' &&
+                    calculator.separation[i] !== '-' &&
+                    calculator.separation[i] !== '/' &&
+                    calculator.separation[i] !== 'x') {
+                    calculator.separation[i] = Number(calculator.separation[i]);
+                }
+            }
+            calculator.result();
+            input.array = [];
+            input.array[0] = calculator.answer
+            output.updateDisplay();
+        }
+
+        //이벤트 설치
+        function setEvent() {
+            var btn = document.getElementsByClassName('btn')
+            for (var i = 0; i < btn.length; i++) {
+                btn[i].addEventListener('click', getArray);
+            }
+            document.querySelector('.btnEqual').addEventListener('click', getResult);
+        }
+        setEvent();
+
+
 
     </script>
 </body>
+
 </html>
