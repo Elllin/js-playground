@@ -167,11 +167,7 @@
         var input = { str: [], array: [], };
         var output = {number:[],result:document.querySelector('.result')};
 
-        //배열 합치기
-       /* input.arrayJoin = function () {
-            return 
-        }
-*/
+    
         //배열 비어있으면 0을 화면에 업데이트
         output.empty = function () {
             if (input.array.length === 0) {
@@ -180,19 +176,6 @@
         }
         output.empty();
 
-        //화면 업데이트 전 숫자만 추출
-      /*  output.filterNumber = function(){
-            var j = 0;
-            for(var i = 0; i < input.array.length; i++){
-                if(input.array[i] !== ' + ' &&
-                input.array[i] !== ' - ' &&
-                input.array[i] !== ' / ' &&
-                input.array[i] !== ' x '){
-                    this.number[j] = input.array[i];
-                    j++;
-                }
-            }
-        };*/
 
         //화면 업데이트
         output.updateDisplay = function () {
